@@ -1,6 +1,12 @@
 # gs_crawler
 Crawler de publicações do Google Scholar.
 
+O projeto está organizado da seguinte forma:
+
+- `data/`: Possui os dados base para serem processados. A pasta `data/raw/` contém as planilhas sem qualquer processamento. O código em `data/cleaner.py` irá processar seus dados de modo a converter as planilhas em csv (salvos em `data/csv`) e, principalmente, irá criar o arquivo `data/queries.jsonl`. Cada linha desse arquivo é uma entrada formatada para o coletor (em `src/main.py`). Caso a planilha não possuia o atributo `ID`, um será criado para ela. 
+  - Caso queira adicionar outra planilha para ser coletada, a adicione na pasta `data/raw/` e no arquivo `data/raw/titles.json`, informe qual é o campo da planilha que representa o título de cada artigo. Veja o arquivo em questão para exemplos.
+- `src/`: Código do coletor propriamente dito. Utiliza o arquivo `data/queries.jsonl` como fontes de consulta e salva em `dump/bundle.jsonl` a coleta realizada (a pasta será criada automaticamente, se não houver nenhuma coleta anterior). Identificador de coletas feitas com ou sem erro serão salvas em `log/` (criado automaticamente, conforme a necessidade).
+
 ## Instalação
 
 **Criar e ativar o ambiente virtual**:
@@ -32,4 +38,4 @@ python main.py
 
 As coletas serão salvas em `dump/bundle.jsonl`.
 
-Cada consulta será tentada até 30 vezes, aumentando em 15 segundos progressivamente a cada erro.
+Cada consulta será tentada até 30 vezes, aumentando em 15 segundos progressivamente o intervalo entre uma tentativa e outra.
