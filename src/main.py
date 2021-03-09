@@ -55,7 +55,7 @@ def create_folders():
 
 if __name__ == '__main__':
     create_folders()
-    
+
     pg = ProxyGenerator()
     pg.Tor_External(tor_sock_port=9050, tor_control_port=9051, tor_password="scholarly_password")
     scholarly.use_proxy(pg)
@@ -95,10 +95,8 @@ if __name__ == '__main__':
                     result['normalized_edit_dist_between_titles'] = distance.levenshtein(title, result.get('title', ''), normalized=True)
 
                     dump.write(json.dumps(result) + '\n')
-                
-                print(f'\t{source}:{sid} coletado...')
+    
                 processeds.write(f'{source}:{sid}\n')
-
                 break
 
             except Exception as e:
@@ -113,6 +111,8 @@ if __name__ == '__main__':
         if attempt > MAX_ATTEMPTS:
             errors.write(f'{source}:{sid}\n')
 
+        it += 1
+        
     dump.close()
     processeds.close()
     errors.close()
