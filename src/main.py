@@ -125,10 +125,10 @@ if __name__ == '__main__':
                     result['order_in_results'] = order
 
                     # Distâncida de edição absoluta entre o título original da publicação e o resultado do Google
-                    result['edit_dist_between_titles'] = distance.levenshtein(title, result.get('title', ''))
+                    result['edit_dist_between_titles'] = distance.levenshtein(title, result.get('title', '').capitalize())
 
                     # Distância de edição normalizado entre 0 e 1 (distância de edição absoluta divididade pelo tamanho da maior sequência (resultado do Google ou título original))
-                    result['normalized_edit_dist_between_titles'] = distance.levenshtein(title, result.get('title', ''), normalized=True)
+                    result['normalized_edit_dist_between_titles'] = distance.levenshtein(title, result.get('title', '').capitalize(), normalized=True)
 
                     dump.write(json.dumps(result) + '\n')
     

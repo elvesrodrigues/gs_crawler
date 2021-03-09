@@ -21,7 +21,7 @@ def clean_title(title: str) -> str:
     s = BeautifulSoup(title, 'lxml').getText()
     s = re.sub(CLEANR, '', s)
     s = s.replace('       ', ' ')
-    return s
+    return s.capitalize()
 
 def get_query(title: str, first_author_last_name: str) -> str:
     '''Retorna uma consulta padronizada
@@ -49,7 +49,7 @@ def process_dataframe(df: DataFrame, filename: str, title: str, save_df_as_csv: 
     if 'ID' not in df:
         df['ID'] = range(1, df.shape[0] + 1)
 
-    with open('queries.jsonl', 'a') as f:
+    with open('queries.jsonl', 'w') as f:
         for _, row in df.iterrows():
             first_author_last_name = row.NOMEPARACITACAO.split('|')[0].split(',')[0]
             pub_title = clean_title(row[title])
